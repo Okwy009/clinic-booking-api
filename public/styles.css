@@ -1,0 +1,105 @@
+:root {
+  --bg: #f6f7f5;
+  --card: #ffffff;
+  --ink: #1b2a24;
+  --muted: #5d6b65;
+  --line: #dfe4e0;
+  --accent: #1f7a5a;
+  --accent-ink: #ffffff;
+  --accent-soft: #e5f2ec;
+  --danger: #b3261e;
+  --radius: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111715;
+    --card: #19211e;
+    --ink: #e6ece9;
+    --muted: #9aa8a2;
+    --line: #2b3531;
+    --accent: #47b48a;
+    --accent-ink: #0d1411;
+    --accent-soft: #1d2e27;
+    --danger: #f2948c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+.top { background: var(--card); border-bottom: 1px solid var(--line); padding: 20px 0; margin-bottom: 24px; }
+.top .wrap { display: flex; gap: 14px; align-items: center; }
+.mark {
+  width: 40px; height: 40px; border-radius: 10px; flex: none;
+  display: grid; place-items: center;
+  background: var(--accent); color: var(--accent-ink); font-size: 26px; font-weight: 700;
+}
+h1 { font-size: 1.35rem; margin: 0; }
+.sub { margin: 2px 0 0; color: var(--muted); }
+
+section {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 20px;
+}
+h2 { font-size: 1.05rem; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+.step {
+  width: 26px; height: 26px; border-radius: 50%; display: inline-grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent); font-size: .85rem; font-weight: 700;
+}
+.step.done { background: var(--accent); color: var(--accent-ink); }
+
+.section-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.filter { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .9rem; }
+
+.muted { color: var(--muted); }
+.day { margin: 16px 0 8px; font-size: .85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+
+.slot {
+  text-align: left; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  border-radius: 10px; padding: 10px 12px; cursor: pointer; font: inherit;
+}
+.slot:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+.slot:disabled { cursor: not-allowed; opacity: .55; }
+.slot .time { font-weight: 650; display: block; }
+.slot .who { color: var(--muted); font-size: .88rem; display: block; }
+.slot .tag { font-size: .75rem; color: var(--muted); }
+
+label { display: block; font-size: .9rem; font-weight: 600; margin-bottom: 12px; }
+input, select {
+  display: block; width: 100%; margin-top: 6px; padding: 10px 12px; font: inherit;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink);
+}
+.filter select { width: auto; margin: 0; padding: 6px 10px; }
+input:focus, select:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+button {
+  font: inherit; font-weight: 600; white-space: nowrap; border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink);
+}
+button:disabled { opacity: .6; cursor: wait; }
+button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--line); }
+.actions { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+
+.chosen { background: var(--accent-soft); border-radius: 8px; padding: 10px 12px; margin-bottom: 16px; }
+.error { color: var(--danger); margin: 0 0 12px; }
+
+.ticket { border: 1px dashed var(--accent); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+.ticket dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+.ticket dt { color: var(--muted); }
+.ticket dd { margin: 0; overflow-wrap: anywhere; }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 99px; font-size: .8rem; font-weight: 600; background: var(--accent-soft); color: var(--accent); }
+.badge.cancelled { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+
+.inline { display: flex; gap: 8px; }
+.inline input { margin: 0; }
+.lookup #lookup-result { margin-top: 14px; }
