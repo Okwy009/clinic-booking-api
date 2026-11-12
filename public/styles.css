@@ -2,6 +2,7 @@
    Palette: adire indigo with one saffron highlight. Type: Atkinson Hyperlegible (built for low-vision readers). */
 
 :root {
+  --adire: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.16' stroke-width='2'%3E%3Ccircle cx='28' cy='28' r='13'/%3E%3Ccircle cx='28' cy='28' r='6'/%3E%3C/g%3E%3Cg fill='%23ffffff' fill-opacity='.16'%3E%3Ccircle cx='0' cy='0' r='3'/%3E%3Ccircle cx='56' cy='0' r='3'/%3E%3Ccircle cx='0' cy='56' r='3'/%3E%3Ccircle cx='56' cy='56' r='3'/%3E%3Ccircle cx='28' cy='28' r='2'/%3E%3C/g%3E%3C/svg%3E");
   --paper: #F6F7FB;
   --surface: #FFFFFF;
   --ink: #1B2140;
@@ -50,7 +51,7 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 h2 { font-size: 1.3rem; }
 
 /* ---------- top bar (both pages) ---------- */
-.bar { background: var(--surface); border-bottom: 1px solid var(--line); }
+.bar { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
 .bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
 .wordmark { color: var(--ink); text-decoration: none; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; }
 .wordmark span { font-weight: 400; margin-left: 6px; color: var(--muted); }
@@ -72,7 +73,8 @@ button.ghost { background: transparent; color: var(--brand); }
 .button.on-dark { background: var(--saffron); border-color: var(--saffron); color: #2B1B00; padding: 14px 26px; font-size: 1.05rem; }
 
 /* ---------- landing: the indigo hero is the one bold element ---------- */
-.hero { background: var(--deep); color: #FFFFFF; }
+.hero { background: var(--deep); color: #FFFFFF; min-height: calc(100vh - 64px); display: flex; align-items: center; }
+.hero > .wrap { width: 100%; }
 .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: stretch; padding-top: 64px; padding-bottom: 64px; }
 .hero-copy { align-self: center; }
 .hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.25rem); letter-spacing: -0.02em; max-width: 14ch; margin-bottom: 18px; }
@@ -87,34 +89,62 @@ button.ghost { background: transparent; color: var(--brand); }
 .hero-art {
   margin: 0; min-height: 320px; border-radius: var(--radius); overflow: hidden; position: relative;
   background-color: #222C66;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.16' stroke-width='2'%3E%3Ccircle cx='28' cy='28' r='13'/%3E%3Ccircle cx='28' cy='28' r='6'/%3E%3C/g%3E%3Cg fill='%23ffffff' fill-opacity='.16'%3E%3Ccircle cx='0' cy='0' r='3'/%3E%3Ccircle cx='56' cy='0' r='3'/%3E%3Ccircle cx='0' cy='56' r='3'/%3E%3Ccircle cx='56' cy='56' r='3'/%3E%3Ccircle cx='28' cy='28' r='2'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: var(--adire);
 }
 /* The photo fills its frame edge to edge; cover crops it slightly rather than stretching it. */
 .hero-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+/* A saffron border around the photo, matching the main button. Change the colour or width here. */
+.hero-art { border: 5px solid var(--saffron); border-radius: 10px; }
 
-/* ---------- landing: quiet sections below ---------- */
-.landing main { padding-top: 56px; }
-.how { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding-bottom: 48px; border-bottom: 1px solid var(--line); }
-.how-steps { margin: 0; padding-left: 1.3em; display: grid; gap: 10px; max-width: 60ch; }
-.how-steps li::marker { color: var(--brand); font-weight: 700; }
+/* ---------- landing: each section is its own full-screen "page" ---------- */
+.page {
+  min-height: calc(100vh - 64px);           /* one screen each, below the sticky bar */
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 96px 0; scroll-margin-top: 64px;
+}
+.page > .wrap { width: 100%; }
+.page-heading { font-size: clamp(2rem, 4.2vw, 2.9rem); letter-spacing: -0.02em; margin-bottom: 12px; }
+.page-intro { color: var(--muted); font-size: 1.12rem; margin: 0 0 48px; max-width: 52ch; }
 
-.photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 48px 0; border-bottom: 1px solid var(--line); }
+/* Page 2: how booking works (a real sequence, so big numbers) */
+.page-how { background: var(--paper); }
+.steps-big { list-style: none; margin: 0 0 48px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.steps-big li { border-top: 3px solid var(--brand); padding-top: 22px; }
+.steps-big .n { display: block; font-size: 3.4rem; font-weight: 700; line-height: 1; color: var(--brand); margin-bottom: 18px; }
+.steps-big h3 { font-size: 1.25rem; margin-bottom: 8px; }
+.steps-big p { margin: 0; color: var(--muted); }
+
+/* Page 3: about us */
+.page-about { background: var(--surface); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.statement { font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.3; margin: 18px 0 0; max-width: 22ch; }
+.about-body { padding-top: 10px; max-width: 56ch; }
+.about-body p { margin: 0 0 16px; }
+.about-body h3 { font-size: 1rem; margin: 30px 0 10px; }
+.doctor-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.doctor-list li { font-size: 1.15rem; font-weight: 700; padding-left: 18px; position: relative; }
+.doctor-list li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 50%; background: var(--saffron); }
+
+.photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 64px; }
 .photo-row figure { margin: 0; }
 .photo-row img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); background: var(--brand-soft); }
 .photo-row figcaption { margin-top: 10px; color: var(--muted); }
 .photo-row:not(:has(figure:not([hidden]))) { display: none; }
 
-/* About and Contact: heading on the left, text on the right, divided by a rule. */
-.split { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 48px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
-.split:last-of-type { border-bottom: 0; }
-.split-body { max-width: 62ch; }
-.split-body p { margin: 0 0 14px; }
-.split-body p:last-child { margin-bottom: 0; }
-.contact { display: grid; grid-template-columns: 190px 1fr; gap: 10px 20px; margin: 0 0 18px; }
-.contact dt { font-weight: 700; }
-.contact dd { margin: 0; }
+/* Page 4: contact, deep indigo to bookend the hero, with an adire strip along the top */
+.page-contact { background: var(--deep); color: #FFFFFF; position: relative; padding-top: 140px; }
+.page-contact::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 56px;
+  background-color: #222C66; background-image: var(--adire);
+}
+.page-contact a:not(.button) { color: #FFFFFF; }
+.contact { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 56px; margin: 36px 0 48px; max-width: 900px; }
+.contact div { border-top: 1px solid rgba(255, 255, 255, .22); padding-top: 16px; }
+.contact dt { color: #C9CFEA; margin-bottom: 6px; }
+.contact dd { margin: 0; font-size: 1.25rem; line-height: 1.4; }
+.contact-note { color: #C9CFEA; margin: 28px 0 0; }
 
-.foot { color: var(--muted); font-size: .92rem; padding-top: 8px; padding-bottom: 40px; }
+.foot { color: var(--muted); font-size: .92rem; padding: 24px 0 32px; background: var(--paper); }
 .foot p { margin: 0; }
 
 /* ---------- booking page ---------- */
@@ -173,10 +203,14 @@ input, select {
   .hero-grid { grid-template-columns: 1fr; gap: 32px; padding-top: 40px; padding-bottom: 40px; }
   .hero-art { min-height: 240px; order: -1; }
   .hero-art.no-photo { min-height: 72px; }
-  .how, .split { grid-template-columns: 1fr; gap: 12px; }
-  .contact { grid-template-columns: 1fr; gap: 2px; }
-  .contact dd { margin-bottom: 10px; }
-  .photo-row { grid-template-columns: 1fr; }
+  .hero { min-height: 0; display: block; }
+  .page { min-height: 0; padding: 64px 0; }
+  .page-contact { padding-top: 120px; }
+  .steps-big, .about-grid, .contact { grid-template-columns: 1fr; }
+  .steps-big { gap: 32px; }
+  .about-grid { gap: 8px; }
+  .contact { gap: 22px; }
+  .photo-row { grid-template-columns: 1fr; margin-top: 40px; }
 }
 @media (max-width: 520px) {
   /* Phones: keep the bar to the wordmark and the one link patients need most. */

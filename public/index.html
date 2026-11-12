@@ -14,6 +14,7 @@
     <div class="wrap bar-inner">
       <a class="wordmark" href="./">Koya<span>Clinic</span></a>
       <nav class="bar-nav" aria-label="Main">
+        <a class="bar-link secondary" href="#how">How it works</a>
         <a class="bar-link secondary" href="#about">About</a>
         <a class="bar-link secondary" href="#contact">Contact</a>
         <a class="bar-link" href="book.html#lookup">Find my booking</a>
@@ -39,62 +40,97 @@
     </div>
   </section>
 
-  <main class="wrap">
-    <section class="how" aria-labelledby="how-title">
-      <h2 id="how-title">How booking works</h2>
-      <ol class="how-steps">
-        <li><strong>Choose a time.</strong> Every open slot for the week is on one page.</li>
-        <li><strong>Add your name and email.</strong> That's all we need.</li>
-        <li><strong>Keep your booking ID.</strong> Use it to check your appointment any time.</li>
-      </ol>
-    </section>
-
-    <div class="photo-row">
-      <figure>
-        <img src="images/team.jpg" alt="Clinic staff at work" loading="lazy" width="640" height="430">
-        <figcaption>Our team will be ready for you when you arrive.</figcaption>
-      </figure>
-      <figure>
-        <img src="images/patient.jpg" alt="A patient at a clinic appointment" loading="lazy" width="640" height="430">
-        <figcaption>Every appointment is a full 30 minutes with one doctor.</figcaption>
-      </figure>
-    </div>
-
-    <section class="split" id="about" aria-labelledby="about-title">
-      <h2 id="about-title">About us</h2>
-      <div class="split-body">
-        <p>
-          Koya Clinic is a general practice for adults and children in Lagos. Our doctors see patients
-          for everyday health concerns: check-ups, coughs and fevers, blood pressure, and advice on what to do next.
-        </p>
-        <p>
-          Every appointment is 30 minutes with one doctor, so there's time to talk properly.
-          You book online and arrive at your time, instead of waiting in a queue.
-        </p>
-        <p id="doctor-names" class="muted" hidden></p>
+  <main>
+    <!-- Each section below is styled as its own full-screen "page". -->
+    <section class="page page-how" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <h2 class="page-heading" id="how-title">How booking works</h2>
+        <p class="page-intro">It takes about a minute, and you don't need an account.</p>
+        <ol class="steps-big">
+          <li>
+            <span class="n" aria-hidden="true">1</span>
+            <h3>Choose a time</h3>
+            <p>Every open appointment for the coming week is on one page. Filter by doctor if you have a favourite.</p>
+          </li>
+          <li>
+            <span class="n" aria-hidden="true">2</span>
+            <h3>Add your name and email</h3>
+            <p>That's all we need. Your appointment is held for you the moment you confirm.</p>
+          </li>
+          <li>
+            <span class="n" aria-hidden="true">3</span>
+            <h3>Keep your booking ID</h3>
+            <p>You'll see it straight away. Use it to check your appointment at any time.</p>
+          </li>
+        </ol>
+        <a class="button" href="book.html">Book an appointment</a>
       </div>
     </section>
 
-    <section class="split" id="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title">Contact</h2>
-      <div class="split-body">
+    <section class="page page-about" id="about" aria-labelledby="about-title">
+      <div class="wrap about-grid">
+        <div>
+          <h2 class="page-heading" id="about-title">About us</h2>
+          <p class="statement">A general practice for adults and children in Lagos, built around unhurried appointments.</p>
+        </div>
+        <div class="about-body">
+          <p>
+            Our doctors see patients for everyday health concerns: check-ups, coughs and fevers,
+            blood pressure, and advice on what to do next.
+          </p>
+          <p>
+            Every appointment is 30 minutes with one doctor, so there's time to talk properly.
+            You book online and arrive at your time, instead of waiting in a queue.
+          </p>
+          <div id="doctors-block" hidden>
+            <h3>Doctors you can book</h3>
+            <ul id="doctor-list" class="doctor-list"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="wrap photo-row">
+        <figure>
+          <img src="images/team.jpg" alt="Clinic staff at work" loading="lazy" width="640" height="430">
+          <figcaption>Our team will be ready for you when you arrive.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/patient.jpg" alt="A patient at a clinic appointment" loading="lazy" width="640" height="430">
+          <figcaption>Every appointment is a full 30 minutes with one doctor.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="page page-contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <h2 class="page-heading" id="contact-title">Contact</h2>
         <dl class="contact">
-          <dt>Opening hours</dt>
-          <dd>Monday to Friday, between 9:00 AM and 4:00 PM. You can book any of the times shown on the booking page.</dd>
-          <dt>Where to find us</dt>
-          <dd>Lekki Phase 1, Lagos</dd>
-          <dt>Email</dt>
-          <dd><a href="mailto:hello@koyaclinic.example">hello@koyaclinic.example</a></dd>
-          <dt>Changing or cancelling</dt>
-          <dd>Email us with your booking ID so the time can go to someone else.</dd>
+          <div>
+            <dt>Opening hours</dt>
+            <dd>Monday to Friday, 9:00 AM to 4:00 PM. You can book any of the times shown on the booking page.</dd>
+          </div>
+          <div>
+            <dt>Where to find us</dt>
+            <dd>Lekki Phase 1, Lagos</dd>
+          </div>
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:hello@koyaclinic.example">hello@koyaclinic.example</a></dd>
+          </div>
+          <div>
+            <dt>Changing or cancelling</dt>
+            <dd>Email us with your booking ID so the time can go to someone else.</dd>
+          </div>
         </dl>
-        <p class="muted">Please arrive 10 minutes before your appointment. In an emergency, go to the nearest hospital.</p>
+        <a class="button on-dark" href="book.html">Book an appointment</a>
+        <p class="contact-note">Please arrive 10 minutes before your appointment. In an emergency, go to the nearest hospital.</p>
       </div>
     </section>
   </main>
 
-  <footer class="wrap foot">
-    <p>This is a demo booking system: the clinic and its contact details are fictional. Appointment times are shown in your own time zone. Photos from Pexels.</p>
+  <footer class="foot">
+    <div class="wrap">
+      <p>This is a demo booking system: the clinic and its contact details are fictional. Appointment times are shown in your own time zone. Photos from Pexels.</p>
+    </div>
   </footer>
 
   <script src="welcome.js"></script>
