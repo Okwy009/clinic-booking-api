@@ -5,6 +5,7 @@ const path = require("path");
 const express = require("express");
 const { migrate } = require("./db");
 const routes = require("./routes");
+const { limitPageBookings } = require("./rateLimit");
 
 const API_KEY = process.env.API_KEY;
 if (!API_KEY) throw new Error("API_KEY is not set");
@@ -19,11 +20,12 @@ const wrap = (handler) => (req, res, next) => handler(req, res).catch(next);
 // The page lives at /app. It calls /app/api/*, which runs the same handlers on the server,
 // so the API key never has to be shipped to the browser. Only what the page needs is exposed:
 // list slots, book one, and look up a booking. /reset and cancelling stay key-protected.
+// Because this route needs no key, booking through it is also limited per device (rateLimit.js).
 app.use("/app", express.static(path.join(__dirname, "..", "public")));
 const pageApi = express.Router();
 pageApi.use(express.json());
 pageApi.get("/slots", wrap(routes.listSlots));
-pageApi.post("/bookings", wrap(routes.createBooking));
+pageApi.post("/bookings", limitPageBookings, wrap(routes.createBooking));
 pageApi.get("/bookings/:id", wrap(routes.getBooking));
 app.use("/app/api", pageApi);
 app.get("/", (req, res, next) => (req.get("X-API-Key") ? next() : res.redirect("/app/")));

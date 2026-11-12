@@ -13,7 +13,11 @@
   <header class="bar">
     <div class="wrap bar-inner">
       <a class="wordmark" href="./">Koya<span>Clinic</span></a>
-      <a class="bar-link" href="book.html#lookup">Find my booking</a>
+      <nav class="bar-nav" aria-label="Main">
+        <a class="bar-link secondary" href="#about">About</a>
+        <a class="bar-link secondary" href="#contact">Contact</a>
+        <a class="bar-link" href="book.html#lookup">Find my booking</a>
+      </nav>
     </div>
   </header>
 
@@ -56,14 +60,41 @@
       </figure>
     </div>
 
-    <section class="hours" aria-labelledby="hours-title">
-      <h2 id="hours-title">Opening hours</h2>
-      <p>Monday to Friday, 9:00 AM to 4:00 PM. Please arrive 10 minutes before your appointment.</p>
+    <section class="split" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About us</h2>
+      <div class="split-body">
+        <p>
+          Koya Clinic is a general practice for adults and children in Lagos. Our doctors see patients
+          for everyday health concerns: check-ups, coughs and fevers, blood pressure, and advice on what to do next.
+        </p>
+        <p>
+          Every appointment is 30 minutes with one doctor, so there's time to talk properly.
+          You book online and arrive at your time, instead of waiting in a queue.
+        </p>
+        <p id="doctor-names" class="muted" hidden></p>
+      </div>
+    </section>
+
+    <section class="split" id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact</h2>
+      <div class="split-body">
+        <dl class="contact">
+          <dt>Opening hours</dt>
+          <dd>Monday to Friday, between 9:00 AM and 4:00 PM. You can book any of the times shown on the booking page.</dd>
+          <dt>Where to find us</dt>
+          <dd>Lekki Phase 1, Lagos</dd>
+          <dt>Email</dt>
+          <dd><a href="mailto:hello@koyaclinic.example">hello@koyaclinic.example</a></dd>
+          <dt>Changing or cancelling</dt>
+          <dd>Email us with your booking ID so the time can go to someone else.</dd>
+        </dl>
+        <p class="muted">Please arrive 10 minutes before your appointment. In an emergency, go to the nearest hospital.</p>
+      </div>
     </section>
   </main>
 
   <footer class="wrap foot">
-    <p>This is a demo booking system. Appointment times are shown in your own time zone. Photos from Pexels.</p>
+    <p>This is a demo booking system: the clinic and its contact details are fictional. Appointment times are shown in your own time zone. Photos from Pexels.</p>
   </footer>
 
   <script src="welcome.js"></script>

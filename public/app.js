@@ -145,7 +145,11 @@ async function submitBooking(event) {
   } catch (err) {
     let message = err.message;
     if (err.status === 409) message = "Someone else has just booked this time. Choose another time.";
-    if (err.status === 429) message = `Too many booking attempts with this email. Try again in ${err.retryAfter || "a few"} seconds.`;
+    if (err.status === 429) {
+      const secs = Number(err.retryAfter);
+      const wait = secs >= 120 ? `${Math.ceil(secs / 60)} minutes` : `${secs || "a few"} seconds`;
+      message = `Too many booking attempts. Try again in ${wait}.`;
+    }
     if (err.status === 400 && /^email/.test(err.message)) message = "Enter a valid email address, like name@example.com.";
     else if (err.status === 400 && /^name/.test(err.message)) message = "Enter your full name.";
     errorBox.textContent = message;

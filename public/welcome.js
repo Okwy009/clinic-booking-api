@@ -10,6 +10,15 @@ async function showNextOpen() {
     if (!res.ok) throw new Error(`status ${res.status}`);
     const { slots } = await res.json();
 
+    // "About us": name the doctors who actually have slots, so this stays true after a /reset.
+    const doctors = [...new Set(slots.map((s) => s.provider))].sort();
+    const names = document.getElementById("doctor-names");
+    if (doctors.length) {
+      const list = doctors.length === 1 ? doctors[0] : `${doctors.slice(0, -1).join(", ")} and ${doctors[doctors.length - 1]}`;
+      names.textContent = `Our doctors: ${list}.`;
+      names.hidden = false;
+    }
+
     // Slots come sorted by start time, so the first open future slot is the next available one.
     const next = slots.find((s) => s.available && new Date(s.start).getTime() > Date.now());
     note.textContent = next

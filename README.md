@@ -40,6 +40,8 @@ The insert uses `ON CONFLICT ... DO NOTHING`, so when 40 requests hit the same s
 **Level 5: rate limiting** (`src/rateLimit.js`)
 A sliding one-minute window per (normalised) email, holding at most 5 attempts. Failed attempts count. The 6th gets 429 with `Retry-After` in whole seconds, computed from when the oldest attempt in the window expires. Idempotent replays don't count, since they create nothing, and the check runs after the key is claimed, so simultaneous retries of one request count once. The limiter is in memory, which is atomic in Node's single thread and right for one instance; running several instances would need Redis or the database instead. `/reset` also clears the limiter.
 
+The public web page's route (`/app/api/bookings`) needs no key, and a spammer could type a new email every time, so it has two extra **per-device (IP)** limits: at most 10 booking attempts per 10 minutes, and at most 3 successful bookings per hour. A place is reserved before the booking runs and given back if it fails, so a burst of simultaneous requests can't slip past. These limits deliberately apply only to the page route, not to the spec's `POST /bookings`, whose level-5 rule is per email.
+
 **The web page** (`public/`)
 The page calls `/app/api/*`, which runs the same handlers on the server. That way the API key is never sent to the browser. Only list slots, book, and look up a booking are exposed there; `/reset` and cancelling still need the key. Each booking attempt sends an `Idempotency-Key`, so a double-click or network retry can't double-book.
 

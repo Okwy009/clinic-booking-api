@@ -54,8 +54,11 @@ h2 { font-size: 1.3rem; }
 .bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
 .wordmark { color: var(--ink); text-decoration: none; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; }
 .wordmark span { font-weight: 400; margin-left: 6px; color: var(--muted); }
+.bar-nav { display: flex; align-items: center; gap: 24px; }
 .bar-link { font-weight: 700; text-decoration: none; white-space: nowrap; }
+.bar-link.secondary { font-weight: 400; color: var(--ink); }
 .bar-link:hover { text-decoration: underline; }
+html { scroll-behavior: smooth; }
 
 /* ---------- buttons ---------- */
 button, .button {
@@ -86,7 +89,8 @@ button.ghost { background: transparent; color: var(--brand); }
   background-color: #222C66;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.16' stroke-width='2'%3E%3Ccircle cx='28' cy='28' r='13'/%3E%3Ccircle cx='28' cy='28' r='6'/%3E%3C/g%3E%3Cg fill='%23ffffff' fill-opacity='.16'%3E%3Ccircle cx='0' cy='0' r='3'/%3E%3Ccircle cx='56' cy='0' r='3'/%3E%3Ccircle cx='0' cy='56' r='3'/%3E%3Ccircle cx='56' cy='56' r='3'/%3E%3Ccircle cx='28' cy='28' r='2'/%3E%3C/g%3E%3C/svg%3E");
 }
-.hero-art img { position: absolute; inset: 22px 22px 0 22px; width: calc(100% - 44px); height: calc(100% - 22px); object-fit: cover; border-radius: 4px 4px 0 0; }
+/* The photo fills its frame edge to edge; cover crops it slightly rather than stretching it. */
+.hero-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 
 /* ---------- landing: quiet sections below ---------- */
 .landing main { padding-top: 56px; }
@@ -100,8 +104,15 @@ button.ghost { background: transparent; color: var(--brand); }
 .photo-row figcaption { margin-top: 10px; color: var(--muted); }
 .photo-row:not(:has(figure:not([hidden]))) { display: none; }
 
-.hours { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 48px 0; }
-.hours p { margin: 0; max-width: 60ch; }
+/* About and Contact: heading on the left, text on the right, divided by a rule. */
+.split { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 48px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
+.split:last-of-type { border-bottom: 0; }
+.split-body { max-width: 62ch; }
+.split-body p { margin: 0 0 14px; }
+.split-body p:last-child { margin-bottom: 0; }
+.contact { display: grid; grid-template-columns: 190px 1fr; gap: 10px 20px; margin: 0 0 18px; }
+.contact dt { font-weight: 700; }
+.contact dd { margin: 0; }
 
 .foot { color: var(--muted); font-size: .92rem; padding-top: 8px; padding-bottom: 40px; }
 .foot p { margin: 0; }
@@ -158,11 +169,18 @@ input, select {
 
 /* ---------- small screens ---------- */
 @media (max-width: 760px) {
+  /* Phones: photo above the text, both on the indigo band. */
   .hero-grid { grid-template-columns: 1fr; gap: 32px; padding-top: 40px; padding-bottom: 40px; }
   .hero-art { min-height: 240px; order: -1; }
   .hero-art.no-photo { min-height: 72px; }
-  .how, .hours { grid-template-columns: 1fr; gap: 12px; }
+  .how, .split { grid-template-columns: 1fr; gap: 12px; }
+  .contact { grid-template-columns: 1fr; gap: 2px; }
+  .contact dd { margin-bottom: 10px; }
   .photo-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  /* Phones: keep the bar to the wordmark and the one link patients need most. */
+  .bar-link.secondary { display: none; }
 }
 @media (max-width: 420px) {
   .grid { grid-template-columns: 1fr 1fr; }
