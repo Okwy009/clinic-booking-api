@@ -3,71 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Book an appointment</title>
+  <title>Koya Clinic: book a doctor's appointment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <header class="top">
-    <div class="wrap">
-      <span class="mark" aria-hidden="true">+</span>
-      <div>
-        <h1>Book an appointment</h1>
-        <p class="sub">Pick an open slot, add your details, and you're booked.</p>
-      </div>
+<body class="landing">
+  <header class="bar">
+    <div class="wrap bar-inner">
+      <a class="wordmark" href="./">Koya<span>Clinic</span></a>
+      <a class="bar-link" href="book.html#lookup">Find my booking</a>
     </div>
   </header>
 
-  <main class="wrap">
-    <!-- Step 1: slots -->
-    <section id="slots-section" aria-labelledby="slots-title">
-      <div class="section-head">
-        <h2 id="slots-title"><span class="step">1</span> Choose a slot</h2>
-        <label class="filter">
-          <span>Doctor</span>
-          <select id="provider-filter"><option value="">All doctors</option></select>
-        </label>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title">See a doctor in Lagos without the queue</h1>
+        <p class="lede">
+          Pick a 30-minute appointment that suits you. You'll get a booking ID straight away,
+          with no account and no phone calls.
+        </p>
+        <a class="button on-dark" href="book.html">Book an appointment</a>
+        <p id="next-open" class="next-open" role="status"></p>
       </div>
-      <p id="slots-status" class="muted" role="status">Loading slots…</p>
-      <div id="slots"></div>
+      <!-- Photos live in public/images/. If one is missing, welcome.js hides it and the pattern shows instead. -->
+      <figure class="hero-art">
+        <img src="images/hero.jpg" alt="A doctor holding a patient's hand to reassure them" width="640" height="560">
+      </figure>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section class="how" aria-labelledby="how-title">
+      <h2 id="how-title">How booking works</h2>
+      <ol class="how-steps">
+        <li><strong>Choose a time.</strong> Every open slot for the week is on one page.</li>
+        <li><strong>Add your name and email.</strong> That's all we need.</li>
+        <li><strong>Keep your booking ID.</strong> Use it to check your appointment any time.</li>
+      </ol>
     </section>
 
-    <!-- Step 2: details -->
-    <section id="form-section" hidden aria-labelledby="form-title">
-      <h2 id="form-title"><span class="step">2</span> Your details</h2>
-      <div class="chosen" id="chosen-slot"></div>
-      <form id="booking-form" novalidate>
-        <label>Full name
-          <input id="name" name="name" autocomplete="name" required>
-        </label>
-        <label>Email
-          <input id="email" name="email" type="email" autocomplete="email" required>
-        </label>
-        <p id="form-error" class="error" role="alert" hidden></p>
-        <div class="actions">
-          <button type="button" class="ghost" id="change-slot">Change slot</button>
-          <button type="submit" id="submit-btn">Confirm booking</button>
-        </div>
-      </form>
-    </section>
+    <div class="photo-row">
+      <figure>
+        <img src="images/team.jpg" alt="Clinic staff at work" loading="lazy" width="640" height="430">
+        <figcaption>Our team will be ready for you when you arrive.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/patient.jpg" alt="A patient at a clinic appointment" loading="lazy" width="640" height="430">
+        <figcaption>Every appointment is a full 30 minutes with one doctor.</figcaption>
+      </figure>
+    </div>
 
-    <!-- Step 3: confirmation -->
-    <section id="confirm-section" hidden aria-labelledby="confirm-title">
-      <h2 id="confirm-title"><span class="step done">✓</span> You're booked</h2>
-      <div class="ticket" id="ticket"></div>
-      <button type="button" id="book-another">Book another slot</button>
-    </section>
-
-    <!-- Look up a booking -->
-    <section class="lookup" aria-labelledby="lookup-title">
-      <h2 id="lookup-title">Find a booking</h2>
-      <form id="lookup-form" class="inline">
-        <input id="lookup-id" placeholder="Booking ID" aria-label="Booking ID" required>
-        <button type="submit" class="ghost">Look up</button>
-      </form>
-      <div id="lookup-result"></div>
+    <section class="hours" aria-labelledby="hours-title">
+      <h2 id="hours-title">Opening hours</h2>
+      <p>Monday to Friday, 9:00 AM to 4:00 PM. Please arrive 10 minutes before your appointment.</p>
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <footer class="wrap foot">
+    <p>This is a demo booking system. Appointment times are shown in your own time zone. Photos from Pexels.</p>
+  </footer>
+
+  <script src="welcome.js"></script>
 </body>
 </html>

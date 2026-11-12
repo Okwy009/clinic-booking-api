@@ -3,7 +3,7 @@
 An API that lets patients book clinic appointment slots, plus a small web page that uses it. Built to the Koya Cohort 4 Task 1 contract ([spec](https://koyaacademy.com/assessment-api)).
 
 - **Stack:** Node.js 22, Express, PostgreSQL (Neon), deployed on Render
-- **Web page:** `/app/`: see open slots, book one, see the confirmation, look up a booking
+- **Web pages:** `/app/` is a simple landing page for "Koya Clinic" (a fictional demo clinic) with the next open slot, live from the API, and optional photos from `public/images/`. It sends patients to `/app/book.html`, where they see open slots, book one, see the confirmation, and look up a booking
 - **All five levels** implemented and covered by `scripts/check.js` (65 checks)
 
 ## Endpoints

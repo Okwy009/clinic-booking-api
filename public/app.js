@@ -51,13 +51,21 @@ async function loadSlots() {
     fillProviderFilter();
     renderSlots();
   } catch (err) {
-    $("slots-status").textContent = `Couldn't load slots: ${err.message}`;
+    $("slots-status").textContent = `Appointments couldn't be loaded (${err.message}). Refresh the page to try again.`;
   }
 }
 
+// The welcome page links here as book.html?doctor=<name> to open with that doctor selected.
+const requestedDoctor = new URLSearchParams(location.search).get("doctor");
+let usedRequestedDoctor = false;
+
 function fillProviderFilter() {
   const select = $("provider-filter");
-  const current = select.value;
+  let current = select.value;
+  if (!usedRequestedDoctor && requestedDoctor) {
+    current = requestedDoctor;
+    usedRequestedDoctor = true;
+  }
   const providers = [...new Set(allSlots.map((s) => s.provider))].sort();
   select.replaceChildren(el("option", { value: "" }, "All doctors"), ...providers.map((p) => el("option", { value: p }, p)));
   select.value = providers.includes(current) ? current : "";
@@ -70,8 +78,8 @@ function renderSlots() {
   const open = upcoming.filter((s) => s.available).length;
 
   $("slots-status").textContent = upcoming.length
-    ? `${open} of ${upcoming.length} upcoming slots open.`
-    : "No upcoming slots right now.";
+    ? `${open} of ${upcoming.length} times are free. Taken times are crossed out.`
+    : "There are no upcoming appointments yet. New times are added regularly.";
 
   const byDay = new Map();
   for (const s of upcoming) {
@@ -91,10 +99,16 @@ function renderSlots() {
         ...slots.map((s) =>
           el(
             "button",
-            { class: "slot", type: "button", disabled: !s.available, onclick: () => chooseSlot(s) },
+            {
+              class: "slot",
+              type: "button",
+              disabled: !s.available,
+              "aria-label": `${fmtTime.format(new Date(s.start))} with ${s.provider}, ${s.available ? "free" : "taken"}`,
+              onclick: () => chooseSlot(s),
+            },
             el("span", { class: "time" }, fmtTime.format(new Date(s.start))),
             el("span", { class: "who" }, s.provider),
-            el("span", { class: "tag" }, `${minutes(s)} min · ${s.available ? "Open" : "Booked"}`)
+            el("span", { class: "tag" }, s.available ? `${minutes(s)} minutes` : "Taken")
           )
         )
       )
@@ -107,7 +121,7 @@ function renderSlots() {
 function chooseSlot(slot) {
   chosenSlot = slot;
   idempotencyKey = crypto.randomUUID();
-  $("chosen-slot").textContent = `${slot.provider} · ${fmtFull.format(new Date(slot.start))}`;
+  $("chosen-slot").textContent = `${fmtFull.format(new Date(slot.start))} with ${slot.provider}`;
   $("form-error").hidden = true;
   show("form");
   $("name").focus();
@@ -130,8 +144,10 @@ async function submitBooking(event) {
     showConfirmation(booking);
   } catch (err) {
     let message = err.message;
-    if (err.status === 409) message = "Someone just booked this slot. Please pick another one.";
-    if (err.status === 429) message = `Too many attempts with this email. Try again in ${err.retryAfter || "a few"} seconds.`;
+    if (err.status === 409) message = "Someone else has just booked this time. Choose another time.";
+    if (err.status === 429) message = `Too many booking attempts with this email. Try again in ${err.retryAfter || "a few"} seconds.`;
+    if (err.status === 400 && /^email/.test(err.message)) message = "Enter a valid email address, like name@example.com.";
+    else if (err.status === 400 && /^name/.test(err.message)) message = "Enter your full name.";
     errorBox.textContent = message;
     errorBox.hidden = false;
     // A different request (edited details, or after an error) needs a fresh key.
@@ -147,15 +163,22 @@ async function submitBooking(event) {
 
 function bookingDetails(booking) {
   const slot = allSlots.find((s) => s.id === booking.slot_id);
+  const status = booking.status === "confirmed" ? "Confirmed" : "Cancelled";
   const rows = [
-    ["Booking ID", booking.id],
-    ["Status", el("span", { class: `badge ${booking.status}` }, booking.status)],
-    ["Doctor", slot ? slot.provider : "—"],
+    ["Status", el("span", { class: `badge ${booking.status}` }, status)],
     ["When", slot ? fmtFull.format(new Date(slot.start)) : booking.slot_id],
+    ["Doctor", slot ? slot.provider : "Not listed"],
     ["Name", booking.name],
     ["Email", booking.email],
   ];
-  return el("dl", {}, ...rows.flatMap(([k, v]) => [el("dt", {}, k), el("dd", {}, v)]));
+  // The booking ID comes first and largest: it's what the patient needs to keep.
+  const box = document.createDocumentFragment();
+  box.append(
+    el("p", { class: "ref-label" }, "Your booking ID"),
+    el("p", { class: "ref" }, booking.id),
+    el("dl", {}, ...rows.flatMap(([k, v]) => [el("dt", {}, k), el("dd", {}, v)]))
+  );
+  return box;
 }
 
 function showConfirmation(booking) {
@@ -177,7 +200,7 @@ async function lookUp(event) {
     const booking = await api(`/bookings/${encodeURIComponent(id)}`);
     out.replaceChildren(el("div", { class: "ticket" }, bookingDetails(booking)));
   } catch (err) {
-    out.replaceChildren(el("p", { class: "error" }, err.status === 404 ? "No booking with that ID." : err.message));
+    out.replaceChildren(el("p", { class: "error" }, err.status === 404 ? "There's no booking with that ID. Check it against your confirmation." : err.message));
   }
 }
 

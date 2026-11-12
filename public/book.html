@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book an appointment: Koya Clinic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="book">
+  <header class="bar">
+    <div class="wrap bar-inner">
+      <a class="wordmark" href="./">Koya<span>Clinic</span></a>
+      <a class="bar-link" href="./">Home</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1 class="page-title">Book an appointment</h1>
+    <p class="page-sub">Appointments are 30 minutes with one doctor.</p>
+
+    <!-- Step 1: slots -->
+    <section id="slots-section" class="panel" aria-labelledby="slots-title">
+      <div class="panel-head">
+        <h2 id="slots-title"><span class="step-no">1.</span>Choose a time</h2>
+        <label class="filter">
+          <span>Doctor</span>
+          <select id="provider-filter"><option value="">All doctors</option></select>
+        </label>
+      </div>
+      <p id="slots-status" class="muted" role="status">Loading appointments…</p>
+      <div id="slots"></div>
+    </section>
+
+    <!-- Step 2: details -->
+    <section id="form-section" class="panel" hidden aria-labelledby="form-title">
+      <h2 id="form-title"><span class="step-no">2.</span>Add your details</h2>
+      <p class="chosen" id="chosen-slot"></p>
+      <form id="booking-form" novalidate>
+        <label>Full name
+          <input id="name" name="name" autocomplete="name" required>
+        </label>
+        <label>Email
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </label>
+        <p id="form-error" class="error" role="alert" hidden></p>
+        <div class="actions">
+          <button type="button" class="ghost" id="change-slot">Choose another time</button>
+          <button type="submit" id="submit-btn">Confirm booking</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Step 3: confirmation -->
+    <section id="confirm-section" class="panel" hidden aria-labelledby="confirm-title">
+      <h2 id="confirm-title"><span class="step-no">3.</span>Your appointment is booked</h2>
+      <div class="ticket" id="ticket"></div>
+      <button type="button" id="book-another">Book another appointment</button>
+    </section>
+
+    <!-- Look up a booking -->
+    <section class="panel" id="lookup" aria-labelledby="lookup-title">
+      <h2 id="lookup-title">Find a booking</h2>
+      <p class="muted">Enter the booking ID from your confirmation.</p>
+      <form id="lookup-form" class="inline">
+        <input id="lookup-id" placeholder="Booking ID" aria-label="Booking ID" required>
+        <button type="submit" class="ghost">Find booking</button>
+      </form>
+      <div id="lookup-result"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
