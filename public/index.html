@@ -27,11 +27,13 @@
       <div class="hero-copy">
         <h1 id="hero-title">See a doctor in Lagos without the queue</h1>
         <p class="lede">
-          Pick a 30-minute appointment that suits you. You'll get a booking ID straight away,
-          with no account and no phone calls.
+          Pick a 30-minute appointment that suits you and get your booking ID straight away.
+          No account, no phone calls.
         </p>
-        <a class="button on-dark" href="book.html">Book an appointment</a>
-        <p id="next-open" class="next-open" role="status"></p>
+        <div class="cta-row">
+          <a class="button" href="book.html">Book an appointment</a>
+          <p id="next-open" class="next-open" role="status"></p>
+        </div>
       </div>
       <!-- Photos live in public/images/. If one is missing, welcome.js hides it and the pattern shows instead. -->
       <figure class="hero-art">
@@ -41,29 +43,28 @@
   </section>
 
   <main>
-    <!-- Each section below is styled as its own full-screen "page". -->
+    <!-- Each section below is styled as its own "page" with its own background. -->
     <section class="page page-how" id="how" aria-labelledby="how-title">
       <div class="wrap">
         <h2 class="page-heading" id="how-title">How booking works</h2>
-        <p class="page-intro">It takes about a minute, and you don't need an account.</p>
+        <p class="page-intro">It takes about a minute.</p>
         <ol class="steps-big">
           <li>
             <span class="n" aria-hidden="true">1</span>
             <h3>Choose a time</h3>
-            <p>Every open appointment for the coming week is on one page. Filter by doctor if you have a favourite.</p>
+            <p>Every open appointment this week, on one page.</p>
           </li>
           <li>
             <span class="n" aria-hidden="true">2</span>
             <h3>Add your name and email</h3>
-            <p>That's all we need. Your appointment is held for you the moment you confirm.</p>
+            <p>No account and no password.</p>
           </li>
           <li>
             <span class="n" aria-hidden="true">3</span>
-            <h3>Keep your booking ID</h3>
-            <p>You'll see it straight away. Use it to check your appointment at any time.</p>
+            <h3>Save your booking ID</h3>
+            <p>It's the only way to look up your appointment, so write it down or take a screenshot.</p>
           </li>
         </ol>
-        <a class="button" href="book.html">Book an appointment</a>
       </div>
     </section>
 
@@ -88,16 +89,10 @@
           </div>
         </div>
       </div>
-      <div class="wrap photo-row">
-        <figure>
-          <img src="images/team.jpg" alt="Clinic staff at work" loading="lazy" width="640" height="430">
-          <figcaption>Our team will be ready for you when you arrive.</figcaption>
-        </figure>
-        <figure>
-          <img src="images/patient.jpg" alt="A patient at a clinic appointment" loading="lazy" width="640" height="430">
-          <figcaption>Every appointment is a full 30 minutes with one doctor.</figcaption>
-        </figure>
-      </div>
+      <!-- One wide photo under the About text. Add it as public/images/about.jpg; if it's missing, it hides itself. -->
+      <figure class="wrap about-photo">
+        <img src="images/about.jpg" alt="A stethoscope and a paper heart beside the words Thank you doctors" loading="lazy" width="1600" height="686">
+      </figure>
     </section>
 
     <section class="page page-contact" id="contact" aria-labelledby="contact-title">
@@ -121,7 +116,7 @@
             <dd>Email us with your booking ID so the time can go to someone else.</dd>
           </div>
         </dl>
-        <a class="button on-dark" href="book.html">Book an appointment</a>
+        <a class="button" href="book.html">See this week's open times</a>
         <p class="contact-note">Please arrive 10 minutes before your appointment. In an emergency, go to the nearest hospital.</p>
       </div>
     </section>
