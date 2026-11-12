@@ -221,3 +221,4 @@ input, select {
   .panel { padding: 18px; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+.about-photo img { object-position: center 70%; }
